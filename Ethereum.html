@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Fetch and Graph CSV</title>
+    <script>
+        var api = 'https://api.finage.co.uk/last/crypto/detailed/';
+        var crypt = 'usd';
+        var apiKey = '?apikey=API_KEY496Z0N8OYN5ZBXGZRIAHPUZNSSX837FB';
+        var input = 'eth';
+
+        var url = api + input + crypt + apiKey;
+        var a, b;
+        
+        async function getISS() {
+           const response = await fetch(url);
+           const data = await response.json();
+           const {yearLow, yearHigh} = data;
+
+              document.getElementById('low').textContent = yearLow.toFixed(2);
+             document.getElementById('high').textContent = yearHigh.toFixed(2);
+             
+        }
+      getISS();
+       
+    </script>
+  </head>
+  <body>
+      <h1>Ethereum</h1>
+      <p> Year low: <span id="low"></span> USD<br/><br/>
+          Year High: <span id="high"></span> USD
+      </p>
+      <iframe src="Interest.html" height="100" width="400" title="Iframe Example" style="border:none;"></iframe>
+      <p>
+        <iframe src="graph.html" height="400" width="400" title="Iframe Example" style="border:none;">
+        </iframe>
+  </body>
+</html>

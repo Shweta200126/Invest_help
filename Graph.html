@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Fetch and Graph CSV</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.1/dist/chart.min.js"></script>
+  </head>
+  <body>
+      <canvas id="myChart" width="800" height="800"></canvas>
+    <script>
+    
+    chartIt();
+
+    async function chartIt(){
+        const data = await getData();
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+            labels: data.xs,
+        datasets: [
+            {
+            label: 'Price of Ethereum in USD',
+            data: data.ys,
+            fill: false,
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
+            borderWidth: 1
+        }
+      ]
+            }
+        });
+}
+
+
+
+
+    async function getData() {
+        const xs = [];
+        const ys = [];
+
+       const response =  await fetch('https://raw.githubusercontent.com/Shweta200126/test/main/ETH_USD_2020-04-19_2021-04-18-CoinDesk.csv');
+       const data = await response.text();
+
+       console.log(data);
+
+       const rows = data.split('\n').slice(1);
+       rows.forEach(elt => {
+          const row = elt.split(',');
+          const year = row[1];
+          xs.push(year);
+          const temp = row[3];
+          ys.push(temp);
+          console.log(year, temp);
+       });
+       return { xs, ys};
+
+    }
+    </script>
+  </body>
+</html>
